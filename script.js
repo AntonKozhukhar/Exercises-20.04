@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /* 1. Дана JSON строка '["Коля", "Вася", "Петя"]'. Преобразуйте ее в массив JavaScript и выведите на экран элемент "Петя".
 
@@ -36,7 +36,8 @@ var filmDetails = '{"Title":"Star Wars: Episode IV - A New Hope","Year":"1977","
 3.1  Распарсить Json, сгенерировать разметку.
 3.2  Добавить кнопку редактирования, по нажатию на кнопку, div текстом заменяются инпутами с предустановленными value. */
 
-let filmDetails = '{"Title":"Star Wars: Episode IV - A New Hope","Year":"1977","Released":"25 May 1977","Runtime":"121 min"}';
+let filmDetails =
+	'{"Title":"Star Wars: Episode IV - A New Hope","Year":"1977","Released":"25 May 1977","Runtime":"121 min"}';
 
 let div = document.querySelector('div');
 let btn = document.querySelector('button');
@@ -46,28 +47,18 @@ input.setAttribute('type', 'text');
 
 let obj = JSON.parse(filmDetails);
 
-div.innerText = `
-    Title: ${obj.Title}
-    Year: ${obj.Year}
-    Released: ${obj.Released}
-    Runtime: ${obj.Runtime}
-`
+let preview = '';
+let previewInputs = '';
 
-btn.addEventListener('click', () => {
-
-    div.innerHTML = `
-    <label>Title: </label>
-    <input type="text" value="${obj.Title}">
-
-    <label>Year: </label>
-    <input type="text" value="${obj.Year}">
-
-    <label>Released: </label>
-    <input type="text" value="${obj.Released}">
-
-    <label>Title: </label>
-    <input Runtime="text" value="${obj.Runtime}">
-    `
-})
-
-
+for (let key in obj) {
+  preview += `
+  ${key}: ${obj[key]}`;
+  div.innerText = preview;
+  
+  btn.addEventListener('click', () => {
+		previewInputs += `
+      ${key}: <input type="text" value="${obj[key]}">
+      `;
+		div.innerHTML = previewInputs;
+	});
+}
